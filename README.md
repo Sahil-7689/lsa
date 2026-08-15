@@ -2,7 +2,8 @@
 
 > **Hiring Project Form (HPF) Technical Submission**  
 > **Target Role:** Flutter Mobile App Developer  
-> **Simulation Purpose:** Demonstrates secure REST API integration, atomic Byt UI architecture, deterministic Data Lineage enforcement, Fail-Closed quarantine mechanics, and UI hesitation telemetry.
+> **Simulation Purpose:** Demonstrates secure REST API integration, atomic Byt UI architecture, deterministic Data Lineage enforcement, Fail-Closed quarantine mechanics, and UI hesitation telemetry.  
+> 🎥 **Demo Video:** [Watch Technical Demo Video](./docs/demo_video.mp4) | 📊 **Presentation Deck:** [docs/presentation.md](./docs/presentation.md)
 
 ---
 

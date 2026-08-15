@@ -298,8 +298,12 @@ Hesitation Duration: 5.0s
 ### Visual Layout
 - Embedded technical demonstration video and test summary metrics.
 
-**Embedded Demonstration Video:**
-> 🎥 [Screen Recording - Aug 15, 2026.mp4](file:///d:/flutter/web_demo/public/demo_video.mp4) (Embedded in interactive presentation: `http://localhost:5000/presentation.html#slide-11`)
+https://github.com/user-attachments/assets/demo_video.mp4
+
+<video src="demo_video.mp4" controls width="100%" poster="https://placehold.co/800x420/0F172A/14B8A6?text=HabotConnect+HPF+Technical+Demo"></video>
+
+> 🎥 **Direct Video File:** [demo_video.mp4](./demo_video.mp4)  
+> 🔗 **Interactive Deck:** `http://localhost:5000/presentation.html#11`
 
 ### Demonstrated Scenarios
 1. **Case 1 (Valid Submission):** Input `PCC-2026-9901` $\rightarrow$ verified by API $\rightarrow$ Success with dynamic ID `VER-xxxxx`.
