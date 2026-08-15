@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HabotConnect HPF — Technical Demonstration: LSA Verification & Data Lineage Integration</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@400;500;600;700;800&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Top Application Banner -->
+  <header class="top-nav">
+    <div class="top-nav-brand">
+      <div class="brand-logo">
+        <i class="fa-solid fa-shield-halved"></i>
+      </div>
+      <div>
+        <h1 class="brand-title">HabotConnect HPF Technical Demonstration</h1>
+        <p class="brand-subtitle">LSA Verification & Data Lineage Integration • Flutter Architecture</p>
+      </div>
+    </div>
+    <div class="top-badges">
+      <span class="badge badge-teal"><i class="fa-solid fa-cube"></i> Stateless Byt Architecture</span>
+      <span class="badge badge-cyan"><i class="fa-solid fa-link"></i> Lineage Governance Gate</span>
+      <span class="badge badge-amber"><i class="fa-solid fa-shield"></i> Fail-Closed Pipeline</span>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="demo-container">
+    
+    <!-- LEFT: Flutter Mobile / Desktop Screen Frame -->
+    <section class="device-column">
+      <div class="device-header-label">
+        <span class="pulse-indicator"></span>
+        <span>Flutter Application Runtime: <code>LsaVerificationScreen</code></span>
+      </div>
+
+      <div class="flutter-scaffold" id="flutterScaffold">
+        <!-- AppBar -->
+        <div class="flutter-appbar">
+          <div class="appbar-title">
+            <i class="fa-solid fa-network-wired" style="color: #2DD4BF; margin-right: 8px;"></i>
+            <span>HabotConnect HPF</span>
+          </div>
+          <div class="appbar-badge">
+            <i class="fa-solid fa-shield"></i>
+            <span>Fail-Closed Enabled</span>
+          </div>
+        </div>
+
+        <!-- Body Scroll Content -->
+        <div class="flutter-body">
+
+          <!-- 1. VerificationHeaderByt -->
+          <div class="byt-header byt-card">
+            <div class="byt-header-icon">
+              <i class="fa-solid fa-fingerprint"></i>
+            </div>
+            <div class="byt-header-text">
+              <h2>LSA Onboarding Gate</h2>
+              <h3>HabotConnect Data Compliance</h3>
+              <p>Cryptographically verify and seal Lead System Administrator profile before network ingestion.</p>
+            </div>
+          </div>
+
+          <!-- 2. StatusBannerByt -->
+          <div class="byt-status-banner status-idle" id="statusBanner">
+            <div class="status-banner-icon" id="statusIcon">
+              <i class="fa-regular fa-circle-check"></i>
+            </div>
+            <div class="status-banner-content">
+              <div class="status-banner-title" id="statusTitle">Idle</div>
+              <div class="status-banner-desc" id="statusDesc">Form is ready for verification input. Enter consent code below.</div>
+            </div>
+            <button class="status-reset-btn" id="bannerResetBtn" style="display: none;">
+              <i class="fa-solid fa-rotate-left"></i> Reset Form
+            </button>
+          </div>
+
+          <!-- 3. Form Card Container -->
+          <div class="flutter-card">
+            
+            <!-- LsaIdFieldByt -->
+            <div class="byt-field-group">
+              <div class="field-header">
+                <label for="lsaIdInput">LSA ID</label>
+                <span class="field-pill">Prefilled</span>
+              </div>
+              <div class="input-wrapper">
+                <i class="fa-regular fa-id-badge input-icon"></i>
+                <input type="text" id="lsaIdInput" class="flutter-input" value="LSA-7049" placeholder="e.g. LSA-7049">
+              </div>
+            </div>
+
+            <!-- ParentConsentFieldByt -->
+            <div class="byt-field-group">
+              <div class="field-header">
+                <label for="parentConsentInput">Parent Consent Code</label>
+                <span class="field-pill pill-tracked">
+                  <i class="fa-regular fa-clock"></i> Tracked Field
+                </span>
+              </div>
+              <div class="input-wrapper">
+                <i class="fa-solid fa-lock-open input-icon"></i>
+                <input type="text" id="parentConsentInput" class="flutter-input" value="" placeholder="Enter consent code (e.g. PCC-2026-9901)">
+              </div>
+            </div>
+
+            <!-- PredecessorFieldByt -->
+            <div class="byt-field-group">
+              <div class="field-header">
+                <label>Predecessor ID</label>
+                <span class="field-pill pill-lineage" id="predecessorBadge">
+                  <i class="fa-solid fa-lock"></i> Read-Only
+                </span>
+              </div>
+              <div class="predecessor-box" id="predecessorBox">
+                <i class="fa-solid fa-diagram-project predecessor-icon" id="predecessorIcon"></i>
+                <span class="predecessor-value" id="predecessorValue">PRED-9982-XYZ</span>
+                <i class="fa-solid fa-lock lock-icon"></i>
+              </div>
+            </div>
+
+            <!-- VerificationButtonByt -->
+            <button class="flutter-submit-btn" id="verifySubmitBtn">
+              <span id="btnSpinner" class="btn-spinner" style="display: none;"></span>
+              <span id="btnIcon"><i class="fa-solid fa-shield-check"></i></span>
+              <span id="btnText">Verify & Submit</span>
+            </button>
+
+          </div>
+
+          <!-- 4. SimulationPanelByt -->
+          <div class="simulation-panel byt-card">
+            <div class="simulation-panel-header" id="simPanelToggle">
+              <div class="sim-header-title">
+                <i class="fa-solid fa-flask-vial"></i>
+                <div>
+                  <h4>Assignment Test Scenarios & Telemetry</h4>
+                  <p>Quickly load valid, missing lineage, or HTTP 500 presets</p>
+                </div>
+              </div>
+              <i class="fa-solid fa-chevron-down toggle-icon" id="simToggleIcon"></i>
+            </div>
+            
+            <div class="simulation-body" id="simBody">
+              <div class="sim-label">Preset Test Loaders:</div>
+              <div class="sim-btn-grid">
+                <button class="sim-preset-btn btn-case1" id="btnCase1">
+                  <i class="fa-solid fa-circle-check text-green"></i> Case 1: Valid
+                </button>
+                <button class="sim-preset-btn btn-case2" id="btnCase2">
+                  <i class="fa-solid fa-link-slash text-red"></i> Case 2: Missing Lineage
+                </button>
+                <button class="sim-preset-btn btn-case3" id="btnCase3">
+                  <i class="fa-solid fa-triangle-exclamation text-orange"></i> Case 3: HTTP 500 / Null Status
+                </button>
+                <button class="sim-preset-btn btn-reset" id="btnResetAll">
+                  <i class="fa-solid fa-rotate-right"></i> Reset
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- RIGHT: Architecture, Cryptography & Live Telemetry Inspector -->
+    <section class="inspector-column">
+      
+      <!-- Section 1: Architecture Pipeline Visualization -->
+      <div class="inspector-card">
+        <div class="inspector-header">
+          <div class="inspector-title">
+            <i class="fa-solid fa-sitemap text-teal"></i>
+            <span>Architecture & Security Pipeline Gate Flow</span>
+          </div>
+          <span class="architecture-sub">Stateless UI • 6-Stage Gate</span>
+        </div>
+
+        <div class="pipeline-flow-container">
+          <div class="pipeline-track">
+            
+            <div class="pipeline-node" id="gateNode1">
+              <div class="node-icon"><i class="fa-solid fa-mobile-screen"></i></div>
+              <div class="node-title">1. Stateless UI</div>
+              <div class="node-desc">Modular Byts</div>
+            </div>
+
+            <div class="pipeline-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+
+            <div class="pipeline-node" id="gateNode2">
+              <div class="node-icon"><i class="fa-solid fa-check-double"></i></div>
+              <div class="node-title">2. Validation</div>
+              <div class="node-desc">Format & Types</div>
+            </div>
+
+            <div class="pipeline-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+
+            <div class="pipeline-node" id="gateNode3">
+              <div class="node-icon"><i class="fa-solid fa-link"></i></div>
+              <div class="node-title">3. Predecessor Gate</div>
+              <div class="node-desc">Lineage Check</div>
+            </div>
+
+            <div class="pipeline-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+
+            <div class="pipeline-node" id="gateNode4">
+              <div class="node-icon"><i class="fa-solid fa-fingerprint"></i></div>
+              <div class="node-title">4. Metadata</div>
+              <div class="node-desc">UUID & SHA-256</div>
+            </div>
+
+            <div class="pipeline-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+
+            <div class="pipeline-node" id="gateNode5">
+              <div class="node-icon"><i class="fa-solid fa-cloud-arrow-up"></i></div>
+              <div class="node-title">5. Outbound API</div>
+              <div class="node-desc">/v1/compliance/verify</div>
+            </div>
+
+            <div class="pipeline-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+
+            <div class="pipeline-node" id="gateNode6">
+              <div class="node-icon"><i class="fa-solid fa-shield-virus"></i></div>
+              <div class="node-title">6. Response Gate</div>
+              <div class="node-desc">Never Fail Open</div>
+            </div>
+
+            <div class="pipeline-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+
+            <div class="pipeline-node" id="gateNode7">
+              <div class="node-icon"><i class="fa-solid fa-flag-checkered"></i></div>
+              <div class="node-title">7. Terminal State</div>
+              <div class="node-desc" id="terminalDesc">Success / Quarantine</div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 2: Cryptographic & Metadata Inspection -->
+      <div class="inspector-card">
+        <div class="inspector-header">
+          <div class="inspector-title">
+            <i class="fa-solid fa-key text-teal"></i>
+            <span>Cryptographic & Tracing Telemetry</span>
+          </div>
+          <span class="telemetry-live-badge">LIVE METADATA</span>
+        </div>
+
+        <div class="telemetry-grid">
+          <div class="telemetry-row">
+            <span class="telemetry-label"><code>x-trace-id</code></span>
+            <span class="telemetry-val" id="telemetryTraceId">Generated on submit (RFC 4122 UUID v4)</span>
+          </div>
+          <div class="telemetry-row">
+            <span class="telemetry-label"><code>x-logic-hash</code></span>
+            <span class="telemetry-val" id="telemetryLogicHash">Generated on submit (SHA-256 64-char hex)</span>
+          </div>
+          <div class="telemetry-row">
+            <span class="telemetry-label">Endpoint Contract</span>
+            <span class="telemetry-val"><code>POST http://localhost:3000/v1/compliance/verify</code></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 3: Friction Tracking (>5s Hesitation Rule) -->
+      <div class="inspector-card">
+        <div class="inspector-header">
+          <div class="inspector-title">
+            <i class="fa-solid fa-stopwatch text-blue"></i>
+            <span>Autonomous UI Friction Tracker (&gt;5.0s Inactivity Rule)</span>
+          </div>
+          <div class="friction-status-pill" id="frictionPill">
+            <i class="fa-solid fa-circle text-gray"></i> <span id="frictionStatusText">Idle</span>
+          </div>
+        </div>
+
+        <div class="friction-timer-bar-container">
+          <div class="friction-timer-fill" id="frictionTimerFill"></div>
+        </div>
+        <div class="friction-timer-label">
+          <span>Field: <code>parent_consent_code</code></span>
+          <span id="frictionTimerSeconds">Timer: 0.0s / 5.0s</span>
+        </div>
+
+        <div class="console-box" id="frictionConsole">
+          <div class="console-line text-muted">[System] Friction tracker initialized. Focus parent_consent_code and pause >5s to trigger event.</div>
+        </div>
+      </div>
+
+      <!-- Section 4: Audit & Fail-Closed Quarantine Log -->
+      <div class="inspector-card">
+        <div class="inspector-header">
+          <div class="inspector-title">
+            <i class="fa-solid fa-shield-cat text-red"></i>
+            <span>Fail-Closed Security & Quarantine Audit Console</span>
+          </div>
+          <span class="quarantine-counter" id="quarantineCounter">0 Quarantined Records</span>
+        </div>
+
+        <div class="console-box console-audit" id="auditConsole">
+          <div class="console-line text-muted">[Audit] Security pipeline standing by in Fail-Closed mode.</div>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

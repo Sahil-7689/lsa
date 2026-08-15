@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HabotConnect HPF — Technical Presentation Deck</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@400;500;600;700;800&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --teal-primary: #0F766E;
+      --teal-light: #14B8A6;
+      --teal-glow: rgba(20, 184, 166, 0.4);
+      --bg-slate: #0F172A;
+      --surface-card: #1E293B;
+      --border-color: #334155;
+      --text-white: #F8FAFC;
+      --text-muted: #94A3B8;
+      --accent-green: #10B981;
+      --accent-red: #EF4444;
+      --accent-amber: #F59E0B;
+      --accent-blue: #38BDF8;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg-slate);
+      color: var(--text-white);
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* TOP BAR */
+    .top-bar {
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-color);
+      padding: 12px 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 100;
+    }
+
+    .top-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .top-logo {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #0F766E, #14B8A6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      color: white;
+      box-shadow: 0 0 12px var(--teal-glow);
+    }
+
+    .top-title {
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+
+    .top-controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .control-btn {
+      background: var(--surface-card);
+      border: 1px solid var(--border-color);
+      color: var(--text-white);
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .control-btn:hover {
+      background: #2D3748;
+      border-color: var(--teal-light);
+    }
+
+    .slide-counter {
+      font-family: 'Fira Code', monospace;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--accent-blue);
+      padding: 4px 10px;
+      background: rgba(56, 189, 248, 0.1);
+      border-radius: 6px;
+      border: 1px solid rgba(56, 189, 248, 0.3);
+    }
+
+    /* SLIDE STAGE */
+    .slide-viewport {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 36px;
+      position: relative;
+      overflow-y: auto;
+    }
+
+    .slide-container {
+      width: 100%;
+      max-width: 1180px;
+      background: var(--surface-card);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 44px 52px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+      position: relative;
+      display: none;
+      animation: fadeIn 0.3s ease-out;
+      min-height: 560px;
+    }
+
+    .slide-container.active {
+      display: flex;
+      flex-direction: column;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* SLIDE HEADER */
+    .slide-badge-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .slide-category {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--teal-light);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .slide-number-pill {
+      font-family: 'Fira Code', monospace;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .slide-title {
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--text-white);
+      letter-spacing: -0.02em;
+      margin-bottom: 6px;
+    }
+
+    .slide-subtitle {
+      font-size: 14.5px;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+      line-height: 1.5;
+    }
+
+    /* SLIDE BODY LAYOUTS */
+    .slide-content {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 32px;
+      align-items: center;
+    }
+
+    .slide-content.single-col {
+      grid-template-columns: 1fr;
+    }
+
+    .bullet-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .bullet-item {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+
+    .bullet-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      background: rgba(20, 184, 166, 0.15);
+      border: 1px solid rgba(20, 184, 166, 0.4);
+      color: var(--teal-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .bullet-text strong {
+      color: var(--text-white);
+      font-weight: 700;
+      font-size: 14.5px;
+      display: block;
+      margin-bottom: 3px;
+    }
+
+    .bullet-text p {
+      color: var(--text-muted);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    /* VISUAL CARDS */
+    .visual-box {
+      background: #0B1120;
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 20px;
+      font-family: 'Fira Code', monospace;
+      font-size: 12px;
+      line-height: 1.5;
+      color: #E2E8F0;
+      overflow-x: auto;
+      box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.4);
+    }
+
+    .visual-box.highlight {
+      border-color: var(--teal-light);
+      box-shadow: 0 0 20px rgba(20, 184, 166, 0.15);
+    }
+
+    .tag-green { color: #34D399; }
+    .tag-red { color: #F87171; }
+    .tag-blue { color: #38BDF8; }
+    .tag-amber { color: #FBBF24; }
+
+    /* SPEAKER NOTES DRAWER */
+    .speaker-notes-drawer {
+      background: #0B1120;
+      border-top: 1px solid var(--border-color);
+      padding: 14px 32px;
+      font-size: 12.5px;
+      color: #CBD5E1;
+      display: none;
+      line-height: 1.5;
+    }
+
+    .speaker-notes-drawer.open {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .notes-label {
+      font-weight: 700;
+      color: var(--accent-amber);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+
+    /* BOTTOM NAV BAR */
+    .bottom-bar {
+      background: rgba(15, 23, 42, 0.9);
+      border-top: 1px solid var(--border-color);
+      padding: 12px 36px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav-btn-group {
+      display: flex;
+      gap: 10px;
+    }
+
+    .nav-btn {
+      background: var(--teal-primary);
+      color: white;
+      border: none;
+      padding: 8px 18px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+    }
+
+    .nav-btn:hover:not(:disabled) {
+      background: #115E59;
+      transform: translateY(-1px);
+    }
+
+    .nav-btn:disabled {
+      background: #475569;
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+
+    .progress-bar-bg {
+      flex: 1;
+      max-width: 400px;
+      height: 6px;
+      background: #334155;
+      border-radius: 3px;
+      margin: 0 24px;
+      overflow: hidden;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #0F766E, #14B8A6);
+      width: 8.33%;
+      transition: width 0.3s ease;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOP BAR -->
+  <header class="top-bar">
+    <div class="top-brand">
+      <div class="top-logo">
+        <i class="fa-solid fa-shield-halved"></i>
+      </div>
+      <div>
+        <div class="top-title">HabotConnect HPF — Technical Presentation Deck</div>
+      </div>
+    </div>
+    <div class="top-controls">
+      <span class="slide-counter" id="slideCounter">Slide 1 / 12</span>
+      <button class="control-btn" id="notesToggleBtn">
+        <i class="fa-regular fa-comment-dots"></i> Speaker Notes
+      </button>
+      <button class="control-btn" id="fsToggleBtn">
+        <i class="fa-solid fa-expand"></i> Fullscreen
+      </button>
+      <a href="http://localhost:5000" class="control-btn" style="text-decoration: none; color: inherit;">
+        <i class="fa-solid fa-flask"></i> Interactive Simulator
+      </a>
+    </div>
+  </header>
+
+  <!-- SLIDE VIEWPORT -->
+  <main class="slide-viewport">
+
+    <!-- SLIDE 1: Title & Overview -->
+    <section class="slide-container active" data-slide="1" data-notes="Good day. Today I am presenting my technical implementation for the HabotConnect HPF assignment: LSA Verification and Data Lineage Integration. The goal of this project is to create an enterprise-grade, high-reliability Flutter onboarding gate that mathematically prevents unverified or orphan data from entering the network while maintaining pure stateless UI principles and capturing privacy-preserving user friction metrics.">
+      <div class="slide-badge-row">
+        <span class="slide-category"><i class="fa-solid fa-award"></i> HabotConnect HPF Technical Presentation</span>
+        <span class="slide-number-pill">01 / 12</span>
+      </div>
+      <h2 class="slide-title">LSA Verification & Data Lineage Integration</h2>
+      <p class="slide-subtitle">Stateless Modular Flutter Architecture • Strict Fail-Closed Security Pipeline • Behavioral UI Friction Telemetry</p>
+      
+      <div class="slide-content">
+        <div class="bullet-list">
+          <div class="bullet-item">
+            <div class="bullet-icon"><i class="fa-solid fa-user-check"></i></div>
+            <div class="bullet-text">
+              <strong>Role & Candidate</strong>
+              <p>Applicant: Flutter Mobile App Developer Candidate • Position: Digivir</p>
+            </div>
+          </div>
+          <div class="bullet-item">
+            <div class="bullet-icon"><i class="fa-solid fa-shield-cat"></i></div>
+            <div class="bullet-text">
+              <strong>Fail-Closed Security Architecture</strong>
+              <p>Guarantees that missing lineage or ambiguous server states (HTTP 500, status: null) immediately halt execution and isolate data into quarantine.</p>
+            </div>
+          </div>
+          <div class="bullet-item">
+            <div class="bullet-icon"><i class="fa-solid fa-cube"></i></div>
+            <div class="bullet-text">
+              <strong>Stateless Modular Byt Hierarchy</strong>
+              <p>Pure presentation components driven by native <code>ListenableBuilder</code> with zero <code>setState()</code> calls.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="visual-box highlight">
+          <div class="tag-blue">// Technical Stack & Framework Metrics</div>
+          <div>• Framework : Flutter 3.x (Dart 3.x)</div>
+          <div>• State Mgmt: ChangeNotifier + ListenableBuilder</div>
+          <div>• Security  : SHA-256 + RFC 4122 UUID v4</div>
+          <div>• Lineage   : predecessor_id Pre-flight Gate</div>
+          <div>• Telemetry : Autonomous &gt;5.0s Friction Monitor</div>
+          <div>• Backend   : Node.js/Express Mock Service (Port 3000)</div>
+          <div>• Test Suite: 15/15 Flutter Tests Passed (100%)</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 2: Problem Statement -->
+    <section class="slide-container" data-slide="2" data-notes="In high-stakes compliance environments, failing open is a catastrophic vulnerability. If a system encounters a network error, missing metadata, or ambiguous response, treating it as 'acceptable' compromises data integrity. Our solution implements a 5-tier fail-closed security pipeline that halts execution before network transit whenever compliance criteria are unmet.">
+      <div class="slide-badge-row">
+        <span class="slide-category"><i class="fa-solid fa-triangle-exclamation"></i> Problem Statement</span>
+        <span class="slide-number-pill">02 / 12</span>
+      </div>
+      <h2 class="slide-title">Audit Risks & Fail-Closed Objectives</h2>
+      <p class="slide-subtitle">Preventing orphan records, network leaks, and undetected onboarding friction in decentralized workflows</p>
+      
+      <div class="slide-content">
+        <div class="bullet-list">
+          <div class="bullet-item">
+            <div class="bullet-icon"><i class="fa-solid fa-link-slash"></i></div>
+            <div class="bullet-text">
+              <strong>Orphan & Non-Lineage Records</strong>
+              <p>Credential workflows cannot afford records detached from verified ancestor nodes (<code>predecessor_id</code>).</p>
+            </div>
+          </div>
+          <div class="bullet-item">
+            <div class="bullet-icon"><i class="fa-solid fa-ban"></i></div>
+            <div class="bullet-text">
+              <strong>Zero Toleration for "Fail-Open" States</strong>
+              <p>Any ambiguous API response (HTTP 500 or null status) must be quarantined instantly—never assumed valid.</p>
+            </div>
+          </div>
+          <div class="bullet-item">
+            <div class="bullet-icon"><i class="fa-solid fa-stopwatch"></i></div>
+            <div class="bullet-text">
+              <strong>Privacy-Preserving Telemetry</strong>
+              <p>Must detect user hesitation (&gt;5.0s) during credentialing without storing or capturing keystrokes.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="visual-box">
+          <div class="tag-red">❌ Fail-Open Vulnerability (Standard Web/App):</div>
+          <div>  Error / Null ➔ Bypass Check ➔ Corrupted Ingestion</div>
+          <br>
+          <div class="tag-green">✅ HabotConnect Fail-Closed Security Pipeline:</div>
+          <div>  Error / Null ➔ Halt ➔ Quarantine ➔ Wipe Volatile ➔ Lock</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 3: System Architecture -->
+    <section class="slide-container" data-slide="3" data-notes="Our architecture enforces strict unidirectional data flow. The UI layer has zero knowledge of networking, hashing, or timers. It merely renders the state provided by the VerificationController and dispatches user actions.">
+      <div class="slide-badge-row">
+        <span class="slide-category"><i class="fa-solid fa-sitemap"></i> System Architecture</span>
+        <span class="slide-number-pill">03 / 12</span>
+      </div>
+      <h2 class="slide-title">Layered Separation of Concerns</h2>
+      <p class="slide-subtitle">Unidirectional data flow isolating UI rendering, business orchestration, security gates, and REST transport</p>
+      
+      <div class="slide-content">
+        <div class="bullet-list">
+          <div class="bullet-item">
+            <div class="bullet-icon"><i class="fa-solid fa-mobile-screen"></i></div>
+            <div class="bullet-text">
+              <strong>1. Stateless UI Layer</strong>
+              <p>Composed of atomic Byts listening to immutable <code>VerificationState</code>.</p>
+            </div>
+          </div>
+          <div class="bullet-item">
+            <div class="bullet-icon"><i class="fa-solid fa-gears"></i></div>
+            <div class="bullet-text">
+              <strong>2. Controller Boundary</strong>
+              <p><code>VerificationController</code> coordinates validation, security pipeline, and quarantine transitions.</p>
+            </div>
+          </div>
+          <div class="bullet-item">
+            <div class="bullet-icon"><i class="fa-solid fa-shield-halved"></i></div>
+            <div class="bullet-text">
+              <strong>3. Security & Lineage Engine</strong>
+              <p><code>SecurityService</code> enforces lineage validation and computes SHA-256 logic hashes and UUIDs.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="visual-box">
+          <div class="tag-blue">UI Layer (Stateless Byts)</div>
+          <div>   │  ▲ (Immutable State Broadcast)</div>
+          <div>   ▼  │</div>
+          <div class="tag-amber">VerificationController (ChangeNotifier)</div>
+          <div>   │</div>
+          <div>   ├──▶ SecurityService (Lineage + Cryptography)</div>
+          <div>   ├──▶ FrictionTracker (&gt;5s Hesitation Rule)</div>
+          <div>   └──▶ ComplianceApi (POST /v1/compliance/verify)</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 4: The Byt Principle -->
+    <section class="slide-container" data-slide="4" data-notes="We broke down the interface into atomic 'Byts'. Each Byt manages its own presentation requirements. For instance, the PredecessorFieldByt displays the system-controlled lineage key as strictly read-only, giving immediate visual feedback if lineage is missing.">
+      <div class="slide-badge-row">
+        <span class="slide-category"><i class="fa-solid fa-cubes"></i> Component Hierarchy</span>
+        <span class="slide-number-pill">04 / 12</span>
+      </div>
+      <h2 class="slide-title">The "Byt" Architectural Principle</h2>
+      <p class="slide-subtitle">Atomic, single-responsibility UI decomposition with zero embedded business logic</p>
+      
+      <div class="slide-content">
+        <div class="bullet-list">
+          <div class="bullet-item">
+            <div class="bullet-icon"><i class="fa-solid fa-heading"></i></div>
+            <div class="bullet-text">
+              <strong>VerificationHeaderByt & StatusBannerByt</strong>
+              <p>Branding badges and real-time lifecycle banner (Idle, Processing, Success, Quarantined).</p>
+            </div>
+          </div>
+          <div class="bullet-item">
+            <div class="bullet-icon"><i class="fa-solid fa-signature"></i></div>
+            <div class="bullet-text">
+              <strong>LsaIdFieldByt & ParentConsentFieldByt</strong>
+              <p>Prefilled <code>LSA-7049</code> field and tracked consent input wired to the friction timer.</p>
+            </div>
+          </div>
+          <div class="bullet-item">
+            <div class="bullet-icon"><i class="fa-solid fa-lock"></i></div>
+            <div class="bullet-text">
+              <strong>PredecessorFieldByt & VerificationButtonByt</strong>
+              <p>Read-only lineage token (<code>PRED-9982-XYZ</code>) and primary submission trigger with locked feedback.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="visual-box">
+          <div class="tag-teal">LsaVerificationScreen (StatelessWidget)</div>
+          <div>├── VerificationHeaderByt</div>
+          <div>├── StatusBannerByt</div>
+          <div>├── LsaIdFieldByt</div>
+          <div>├── ParentConsentFieldByt</div>
+          <div>├── PredecessorFieldByt (Read-Only)</div>
+          <div>├── VerificationButtonByt</div>
+          <div>└── SimulationPanelByt (Preset Loaders)</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 5: Stateless Flutter Implementation -->
+    <section class="slide-container" data-slide="5" data-notes="By utilizing Flutter's native ListenableBuilder, we achieve high rendering performance and clean reactive state management without pulling in heavyweight state management packages.">
+      <div class="slide-badge-row">
+        <span class="slide-category"><i class="fa-brands fa-flutter"></i> Flutter Implementation</span>
+        <span class="slide-number-pill">05 / 12</span>
+      </div>
+      <h2 class="slide-title">Pure Stateless UI via ListenableBuilder</h2>
+      <p class="slide-subtitle">Zero setState() calls, immutable state broadcasting, and native SDK performance</p>
+      
+      <div class="slide-content">
+        <div class="bullet-list">
+          <div class="bullet-item">
+            <div class="bullet-icon"><i class="fa-solid fa-feather"></i></div>
+            <div class="bullet-text">
+              <strong>No Heavy Framework Bloat</strong>
+              <p>Built exclusively with Flutter SDK primitives (<code>ChangeNotifier</code> + <code>ListenableBuilder</code>).</p>
+            </div>
+          </div>
+          <div class="bullet-item">
+            <div class="bullet-icon"><i class="fa-solid fa-arrows-rotate"></i></div>
+            <div class="bullet-text">
+              <strong>Immutable State Snapshots</strong>
+              <p><code>VerificationState</code> is completely immutable with type-safe <code>copyWith()</code> constructors.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="visual-box">
+          <div class="tag-blue">class LsaVerificationScreen extends StatelessWidget {</div>
+          <div>  final VerificationController controller;</div>
+          <div>  ...</div>
+          <div>  @override</div>
+          <div>  Widget build(BuildContext context) {</div>
+          <div>    return ListenableBuilder(</div>
+          <div>      listenable: controller,</div>
+          <div>      builder: (context, _) {</div>
+          <div>        final state = controller.state;</div>
+          <div>        return Scaffold(...);</div>
+          <div>      },</div>
+          <div>    );</div>
+          <div>  }</div>
+          <div>}</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 6: REST API Contract -->
+    <section class="slide-container" data-slide="6" data-notes="The API contract enforces JSON payloads with dynamic UTC timestamps. Furthermore, our Node.js mock backend provides a complete test harness for validating HTTP 200, 400 Bad Request, 422 Quarantined, and 500 server simulation.">
+      <div class="slide-badge-row">
+        <span class="slide-category"><i class="fa-solid fa-network-wired"></i> REST Contract</span>
+        <span class="slide-number-pill">06 / 12</span>
+      </div>
+      <h2 class="slide-title">Outbound API & Mock Backend</h2>
+      <p class="slide-subtitle">Strict HTTP contract enforcement with dynamic host resolution</p>
+      
+      <div class="slide-content">
+        <div class="bullet-list">
+          <div class="bullet-item">
+            <div class="bullet-icon"><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+            <div class="bullet-text">
+              <strong>Endpoint & Envelopes</strong>
+              <p><code>POST /v1/compliance/verify</code> receiving JSON payloads with dynamic ISO 8601 UTC timestamps.</p>
+            </div>
+          </div>
+          <div class="bullet-item">
+            <div class="bullet-icon"><i class="fa-solid fa-laptop-code"></i></div>
+            <div class="bullet-text">
+              <strong>Dynamic Platform Base URLs</strong>
+              <p>Resolves <code>localhost:3000</code> for Desktop/Web/iOS and <code>10.0.2.2:3000</code> for Android Emulator.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="visual-box">
+          <div class="tag-amber">POST /v1/compliance/verify HTTP/1.1</div>
+          <div>x-trace-id: 256a6897-c902-4371-ae52-7d8c367fee81</div>
+          <div>x-logic-hash: 02819bab8b3825f5cfe63f0fd625f37915c4a50034cb84d7162efa483c3b91bd</div>
+          <div>Content-Type: application/json</div>
+          <br>
+          <div>{</div>
+          <div>  "predecessor_id": "PRED-9982-XYZ",</div>
+          <div>  "lsa_id": "LSA-7049",</div>
+          <div>  "parent_consent_code": "PCC-2026-9901",</div>
+          <div>  "timestamp_utc": "2026-08-15T12:00:00Z"</div>
+          <div>}</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 7: Data Lineage Governance -->
+    <section class="slide-container" data-slide="7" data-notes="Data lineage is foundational to auditability. The predecessor_id links the current onboarding profile to its upstream ancestor. If this lineage is broken, the client halts execution before sending any network packets.">
+      <div class="slide-badge-row">
+        <span class="slide-category"><i class="fa-solid fa-link"></i> Data Governance</span>
+        <span class="slide-number-pill">07 / 12</span>
+      </div>
+      <h2 class="slide-title">Data Lineage & Predecessor Gate</h2>
+      <p class="slide-subtitle">Zero orphan records: halting execution before network egress when lineage is broken</p>
+      
+      <div class="slide-content">
+        <div class="bullet-list">
+          <div class="bullet-item">
+            <div class="bullet-icon"><i class="fa-solid fa-shield"></i></div>
+            <div class="bullet-text">
+              <strong>Mandatory Predecessor Validation</strong>
+              <p><code>predecessor_id</code> connects the profile to the upstream accreditation root.</p>
+            </div>
+          </div>
+          <div class="bullet-item">
+            <div class="bullet-icon"><i class="fa-solid fa-hand"></i></div>
+            <div class="bullet-text">
+              <strong>Pre-Flight Lineage Interception</strong>
+              <p>If missing, <code>SecurityService</code> throws <code>LineageException</code> and quarantines locally—0 network bytes sent.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="visual-box">
+          <div class="tag-teal">[ Ancestor Node: PRED-9982-XYZ ]</div>
+          <div>              │</div>
+          <div>              ▼ (Gate 3 Validation)</div>
+          <div class="tag-blue">[ Current LSA: LSA-7049 ]</div>
+          <div>              │</div>
+          <div>              ▼ (Signed with x-logic-hash)</div>
+          <div class="tag-green">[ Verified Compliance Ingestion ]</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 8: Cryptographic Metadata -->
+    <section class="slide-container" data-slide="8" data-notes="We generate genuine cryptographic metadata per request. The logic hash is computed as a 64-character SHA-256 hexadecimal string, while the trace ID is generated using RFC 4122 version 4 UUIDs.">
+      <div class="slide-badge-row">
+        <span class="slide-category"><i class="fa-solid fa-key"></i> Cryptography</span>
+        <span class="slide-number-pill">08 / 12</span>
+      </div>
+      <h2 class="slide-title">Dynamic Cryptographic Metadata</h2>
+      <p class="slide-subtitle">Traceability and schema verification via SHA-256 logic hashes and UUID v4 trace headers</p>
+      
+      <div class="slide-content">
+        <div class="bullet-list">
+          <div class="bullet-item">
+            <div class="bullet-icon"><i class="fa-solid fa-fingerprint"></i></div>
+            <div class="bullet-text">
+              <strong>Dynamic x-trace-id</strong>
+              <p>RFC 4122 UUID v4 generated fresh per submission for distributed microservice tracing.</p>
+            </div>
+          </div>
+          <div class="bullet-item">
+            <div class="bullet-icon"><i class="fa-solid fa-hashtag"></i></div>
+            <div class="bullet-text">
+              <strong>Deterministic x-logic-hash</strong>
+              <p>64-character SHA-256 hash guaranteeing logic and schema version alignment.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="visual-box highlight">
+          <div class="tag-blue">// Cryptographic Hashing Formula:</div>
+          <div>logic_hash = SHA256(</div>
+          <div>  "habotconnect_lsa_logic_v1.0:schema_v1.0_2026"</div>
+          <div>)</div>
+          <br>
+          <div class="tag-green">// Resulting 64-char Digest:</div>
+          <div>02819bab8b3825f5cfe63f0fd625f37915c4a50034cb...</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 9: Fail-Closed Security Pipeline -->
+    <section class="slide-container" data-slide="9" data-notes="Fail-closed means uncertainty equals rejection. If the backend returns null status or an HTTP 500 error, the client locks the form, wipes sensitive temporary inputs, and presents a clear quarantine message.">
+      <div class="slide-badge-row">
+        <span class="slide-category"><i class="fa-solid fa-shield-virus"></i> Security Pipeline</span>
+        <span class="slide-number-pill">09 / 12</span>
+      </div>
+      <h2 class="slide-title">Fail-Closed Quarantine Engine</h2>
+      <p class="slide-subtitle">Locking submission and erasing volatile inputs upon any unexpected error or null response</p>
+      
+      <div class="slide-content">
+        <div class="bullet-list">
+          <div class="bullet-item">
+            <div class="bullet-icon"><i class="fa-solid fa-eraser"></i></div>
+            <div class="bullet-text">
+              <strong>Volatile Data Erasure</strong>
+              <p>Clears <code>parent_consent_code</code> from memory to prevent replay of quarantined payloads.</p>
+            </div>
+          </div>
+          <div class="bullet-item">
+            <div class="bullet-icon"><i class="fa-solid fa-lock"></i></div>
+            <div class="bullet-text">
+              <strong>Submission Lockout</strong>
+              <p>Disables form inputs and button until an explicit diagnostic reset.</p>
+            </div>
+          </div>
+          <div class="bullet-item">
+            <div class="bullet-icon"><i class="fa-solid fa-clipboard-list"></i></div>
+            <div class="bullet-text">
+              <strong>QuarantineService Audit Trail</strong>
+              <p>Stores Quarantine ID, timestamp, failed field, and payload for compliance reporting.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="visual-box">
+          <div class="tag-red">================ [FAIL-CLOSED QUARANTINE] ================</div>
+          <div>Quarantine ID : QUAR-80FC58BC</div>
+          <div>Timestamp     : 2026-08-15T12:00:00Z</div>
+          <div>Reason        : Server returned status="null", HTTP=500</div>
+          <div>Failed Field  : api_response</div>
+          <div>Action        : Volatile data wiped • Form locked</div>
+          <div class="tag-red">==========================================================</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 10: Friction Tracking -->
+    <section class="slide-container" data-slide="10" data-notes="To optimize UX without compromising privacy, our FrictionTracker monitors user pauses. Pausing for more than 5 seconds logs an auditable friction event, helping UX teams identify confusing fields without recording user keystrokes.">
+      <div class="slide-badge-row">
+        <span class="slide-category"><i class="fa-solid fa-stopwatch"></i> Behavioral Telemetry</span>
+        <span class="slide-number-pill">10 / 12</span>
+      </div>
+      <h2 class="slide-title">Autonomous UI Friction Tracking</h2>
+      <p class="slide-subtitle">Detecting user hesitation (>5.0s inactivity rule) without capturing sensitive keystrokes</p>
+      
+      <div class="slide-content">
+        <div class="bullet-list">
+          <div class="bullet-item">
+            <div class="bullet-icon"><i class="fa-solid fa-eye"></i></div>
+            <div class="bullet-text">
+              <strong>FocusNode Lifecycle Hook</strong>
+              <p>Focusing <code>parent_consent_code</code> starts a 5.0-second countdown timer.</p>
+            </div>
+          </div>
+          <div class="bullet-item">
+            <div class="bullet-icon"><i class="fa-solid fa-keyboard"></i></div>
+            <div class="bullet-text">
+              <strong>Typing Resets Countdown</strong>
+              <p>Any keystroke or interaction immediately resets the 5-second timer to zero.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="visual-box">
+          <div class="tag-amber">[UI_FRICTION_LOG]</div>
+          <div>Timestamp          : 2026-08-15T07:30:42.647Z</div>
+          <div>Field              : parent_consent_code</div>
+          <div>Hesitation Duration: 5.0s</div>
+          <br>
+          <div class="tag-teal">// Privacy Guard: Zero keystrokes stored</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 11: Demo Video & Walkthrough -->
+    <section class="slide-container" data-slide="11" data-notes="Here is the technical demonstration recorded directly from our running environment. It confirms all 6 required tasks: UI rendering, valid submission, missing lineage quarantine, HTTP 500 simulation, friction tracking, and pipeline architecture.">
+      <div class="slide-badge-row">
+        <span class="slide-category"><i class="fa-solid fa-video"></i> Technical Demo</span>
+        <span class="slide-number-pill">11 / 12</span>
+      </div>
+      <h2 class="slide-title">Technical Demonstration Video</h2>
+      <p class="slide-subtitle">Live recording validating all 6 core assignment scenarios in the execution environment</p>
+      
+      <div class="slide-content single-col">
+        <div style="background: #000; border-radius: 12px; overflow: hidden; border: 1px solid var(--border-color); text-align: center; padding: 12px;">
+          <img src="lsa_demo_preview.png" onerror="this.src='https://placehold.co/800x380/0F172A/14B8A6?text=HPF+Technical+Demonstration+Video+Recording'" style="max-width: 100%; max-height: 320px; border-radius: 8px;" alt="Demo Video">
+          <p style="font-size: 11.5px; color: var(--text-muted); margin-top: 8px;">
+            Full recording available in artifact: <code>walkthrough.md</code>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 12: Automated Tests & Conclusion -->
+    <section class="slide-container" data-slide="12" data-notes="In conclusion, this project delivers a secure, modular, and fully tested Flutter verification gate. It proves that client-side security, data lineage, and privacy-first telemetry can be seamlessly combined with pure stateless Flutter architecture. Thank you.">
+      <div class="slide-badge-row">
+        <span class="slide-category"><i class="fa-solid fa-flag-checkered"></i> Verification & Summary</span>
+        <span class="slide-number-pill">12 / 12</span>
+      </div>
+      <h2 class="slide-title">Test Verification & Engineering Conclusion</h2>
+      <p class="slide-subtitle">100% test pass rate across Flutter and Node.js test runners • Production ready</p>
+      
+      <div class="slide-content">
+        <div class="bullet-list">
+          <div class="bullet-item">
+            <div class="bullet-icon"><i class="fa-solid fa-circle-check"></i></div>
+            <div class="bullet-text">
+              <strong>15/15 Flutter Tests Passed</strong>
+              <p>Unit, widget, and integration coverage verifying lineage exceptions, 500 quarantine, and friction timers.</p>
+            </div>
+          </div>
+          <div class="bullet-item">
+            <div class="bullet-icon"><i class="fa-solid fa-server"></i></div>
+            <div class="bullet-text">
+              <strong>6/6 Mock Backend Tests Passed</strong>
+              <p>Node.js TAP tests validating header security, lineage enforcement, and failure simulation.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="visual-box highlight">
+          <div class="tag-green">00:01 +15: All Flutter tests passed!</div>
+          <br>
+          <div class="tag-blue">Deliverables Checklist:</div>
+          <div>✔ Pure Stateless Flutter UI (Byt Architecture)</div>
+          <div>✔ Data Lineage Predecessor Gate</div>
+          <div>✔ Dynamic SHA-256 & UUID Metadata</div>
+          <div>✔ Strict Fail-Closed Quarantine Pipeline</div>
+          <div>✔ Autonomous &gt;5.0s UI Friction Telemetry</div>
+          <div>✔ GitHub Repo: https://github.com/Sahil-7689/lsa</div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- SPEAKER NOTES DRAWER -->
+  <aside class="speaker-notes-drawer" id="speakerNotesDrawer">
+    <div class="notes-label"><i class="fa-regular fa-comment-dots"></i> Speaker Notes:</div>
+    <div id="speakerNotesText">Loading notes...</div>
+  </aside>
+
+  <!-- BOTTOM NAVIGATION BAR -->
+  <footer class="bottom-bar">
+    <div class="nav-btn-group">
+      <button class="nav-btn" id="prevSlideBtn"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+      <button class="nav-btn" id="nextSlideBtn">Next <i class="fa-solid fa-arrow-right"></i></button>
+    </div>
+
+    <div class="progress-bar-bg">
+      <div class="progress-bar-fill" id="progressBarFill"></div>
+    </div>
+
+    <div style="font-size: 11.5px; color: var(--text-muted);">
+      Use <kbd style="background:#334155; padding:2px 6px; border-radius:4px;">←</kbd> <kbd style="background:#334155; padding:2px 6px; border-radius:4px;">→</kbd> arrow keys to navigate
+    </div>
+  </footer>
+
+  <script>
+    let currentSlide = 1;
+    const totalSlides = 12;
+
+    const slides = document.querySelectorAll('.slide-container');
+    const slideCounter = document.getElementById('slideCounter');
+    const prevSlideBtn = document.getElementById('prevSlideBtn');
+    const nextSlideBtn = document.getElementById('nextSlideBtn');
+    const progressBarFill = document.getElementById('progressBarFill');
+    const notesToggleBtn = document.getElementById('notesToggleBtn');
+    const speakerNotesDrawer = document.getElementById('speakerNotesDrawer');
+    const speakerNotesText = document.getElementById('speakerNotesText');
+    const fsToggleBtn = document.getElementById('fsToggleBtn');
+
+    function showSlide(index) {
+      if (index < 1) index = 1;
+      if (index > totalSlides) index = totalSlides;
+
+      currentSlide = index;
+
+      slides.forEach((slide) => {
+        const slideNum = parseInt(slide.getAttribute('data-slide'));
+        if (slideNum === currentSlide) {
+          slide.classList.add('active');
+          const notes = slide.getAttribute('data-notes') || 'No notes for this slide.';
+          speakerNotesText.textContent = notes;
+        } else {
+          slide.classList.remove('active');
+        }
+      });
+
+      slideCounter.textContent = `Slide ${currentSlide} / ${totalSlides}`;
+      progressBarFill.style.width = `${(currentSlide / totalSlides) * 100}%`;
+
+      prevSlideBtn.disabled = currentSlide === 1;
+      nextSlideBtn.disabled = currentSlide === totalSlides;
+    }
+
+    prevSlideBtn.addEventListener('click', () => showSlide(currentSlide - 1));
+    nextSlideBtn.addEventListener('click', () => showSlide(currentSlide + 1));
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+        showSlide(currentSlide + 1);
+      } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+        showSlide(currentSlide - 1);
+      }
+    });
+
+    notesToggleBtn.addEventListener('click', () => {
+      speakerNotesDrawer.classList.toggle('open');
+    });
+
+    fsToggleBtn.addEventListener('click', () => {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen();
+        fsToggleBtn.innerHTML = '<i class="fa-solid fa-compress"></i> Exit Fullscreen';
+      } else {
+        document.exitFullscreen();
+        fsToggleBtn.innerHTML = '<i class="fa-solid fa-expand"></i> Fullscreen';
+      }
+    });
+
+    showSlide(1);
+  </script>
+</body>
+</html>

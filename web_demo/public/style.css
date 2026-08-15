@@ -1,0 +1,822 @@
+:root {
+  --primary-teal: #0F766E;
+  --primary-teal-light: #14B8A6;
+  --primary-teal-dark: #115E59;
+  --bg-dark: #0B0F19;
+  --surface-dark: #131B2E;
+  --card-dark: #1A243B;
+  --border-dark: #263352;
+  --text-main: #F8FAFC;
+  --text-muted: #94A3B8;
+  --color-green: #10B981;
+  --color-red: #EF4444;
+  --color-orange: #F97316;
+  --color-blue: #3B82F6;
+  --color-cyan: #06B6D4;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: var(--bg-dark);
+  color: var(--text-main);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+code {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.9em;
+}
+
+/* TOP NAVBAR */
+.top-nav {
+  background: var(--surface-dark);
+  border-bottom: 1px solid var(--border-dark);
+  padding: 12px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.top-nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.brand-logo {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #0F766E, #14B8A6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  color: white;
+  box-shadow: 0 0 15px rgba(20, 184, 166, 0.4);
+}
+
+.brand-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: #FFFFFF;
+  letter-spacing: -0.01em;
+}
+
+.brand-subtitle {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.top-badges {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.badge-teal {
+  background: rgba(15, 118, 110, 0.25);
+  border: 1px solid rgba(20, 184, 166, 0.5);
+  color: #2DD4BF;
+}
+
+.badge-cyan {
+  background: rgba(6, 182, 212, 0.2);
+  border: 1px solid rgba(6, 182, 212, 0.4);
+  color: #67E8F9;
+}
+
+.badge-amber {
+  background: rgba(245, 158, 11, 0.2);
+  border: 1px solid rgba(245, 158, 11, 0.4);
+  color: #FCD34D;
+}
+
+/* MAIN LAYOUT */
+.demo-container {
+  display: grid;
+  grid-template-columns: 460px 1fr;
+  gap: 24px;
+  padding: 24px 28px;
+  flex: 1;
+  max-width: 1600px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+@media (max-width: 1180px) {
+  .demo-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* DEVICE / FLUTTER COLUMN */
+.device-column {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.device-header-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.pulse-indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #10B981;
+  box-shadow: 0 0 10px #10B981;
+  animation: pulseAnim 1.8s infinite;
+}
+
+@keyframes pulseAnim {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+  70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+}
+
+/* FLUTTER SCAFFOLD FRAME */
+.flutter-scaffold {
+  background: #F8FAFC;
+  border-radius: 18px;
+  border: 1px solid #CBD5E1;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
+  overflow: hidden;
+  color: #0F172A;
+  display: flex;
+  flex-direction: column;
+}
+
+/* FLUTTER APPBAR */
+.flutter-appbar {
+  background: #0F172A;
+  color: white;
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.appbar-title {
+  font-size: 15px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+}
+
+.appbar-badge {
+  background: rgba(15, 118, 110, 0.35);
+  border: 0.8px solid #14B8A6;
+  color: #2DD4BF;
+  font-size: 10.5px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+/* FLUTTER BODY */
+.flutter-body {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  max-height: calc(100vh - 160px);
+  overflow-y: auto;
+}
+
+.byt-card {
+  background: white;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  padding: 14px;
+}
+
+/* 1. HEADER BYT */
+.byt-header {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  background: white;
+}
+
+.byt-header-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: #CCFBF1;
+  color: #0F766E;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.byt-header-text h2 {
+  font-size: 15px;
+  font-weight: 700;
+  color: #0F172A;
+}
+
+.byt-header-text h3 {
+  font-size: 12px;
+  font-weight: 600;
+  color: #0F766E;
+  margin-top: 1px;
+}
+
+.byt-header-text p {
+  font-size: 11px;
+  color: #64748B;
+  margin-top: 4px;
+  line-height: 1.35;
+}
+
+/* 2. STATUS BANNER BYT */
+.byt-status-banner {
+  border-radius: 10px;
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transition: all 0.3s ease;
+}
+
+.status-banner-icon {
+  font-size: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.status-banner-content {
+  flex: 1;
+}
+
+.status-banner-title {
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.status-banner-desc {
+  font-size: 11px;
+  margin-top: 2px;
+}
+
+.status-reset-btn {
+  background: white;
+  border: 1px solid #CBD5E1;
+  border-radius: 6px;
+  padding: 4px 8px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  color: #334155;
+  transition: background 0.2s;
+}
+
+.status-reset-btn:hover {
+  background: #F1F5F9;
+}
+
+/* Banner Status States */
+.status-idle {
+  background: #F1F5F9;
+  border: 1px solid #CBD5E1;
+  color: #334155;
+}
+
+.status-processing {
+  background: #EFF6FF;
+  border: 1px solid #93C5FD;
+  color: #1E40AF;
+}
+
+.status-success {
+  background: #F0FDF4;
+  border: 1px solid #86EFAC;
+  color: #166534;
+}
+
+.status-quarantined {
+  background: #FEF2F2;
+  border: 1px solid #FCA5A5;
+  color: #991B1B;
+}
+
+/* 3. FORM CARD */
+.flutter-card {
+  background: white;
+  border: 1px solid #E2E8F0;
+  border-radius: 14px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.byt-field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.field-header label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #1E293B;
+}
+
+.field-pill {
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: #F1F5F9;
+  color: #64748B;
+}
+
+.pill-tracked {
+  background: #EFF6FF;
+  color: #2563EB;
+}
+
+.pill-lineage {
+  background: #FEF3C7;
+  color: #B45309;
+  border: 1px solid #FDE68A;
+}
+
+.pill-lineage-missing {
+  background: #FEE2E2 !important;
+  color: #DC2626 !important;
+  border: 1px solid #FECACA !important;
+}
+
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-icon {
+  position: absolute;
+  left: 12px;
+  color: #0F766E;
+  font-size: 15px;
+  pointer-events: none;
+}
+
+.flutter-input {
+  width: 100%;
+  padding: 10px 12px 10px 38px;
+  border: 1px solid #CBD5E1;
+  border-radius: 8px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #0F172A;
+  background: white;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.flutter-input:focus {
+  outline: none;
+  border-color: #0F766E;
+  box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.15);
+}
+
+.flutter-input:disabled {
+  background: #F8FAFC;
+  color: #94A3B8;
+  cursor: not-allowed;
+}
+
+/* Predecessor Lineage Box */
+.predecessor-box {
+  display: flex;
+  align-items: center;
+  padding: 10px 12px;
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: 8px;
+  gap: 10px;
+  transition: all 0.2s ease;
+}
+
+.predecessor-box.missing {
+  background: #FFF5F5;
+  border-color: #F87171;
+}
+
+.predecessor-icon {
+  color: #64748B;
+  font-size: 15px;
+}
+
+.predecessor-value {
+  font-family: 'Fira Code', monospace;
+  font-size: 13px;
+  font-weight: 600;
+  color: #334155;
+  flex: 1;
+}
+
+.predecessor-value.missing-text {
+  color: #DC2626;
+}
+
+.lock-icon {
+  color: #94A3B8;
+  font-size: 12px;
+}
+
+/* Submit Button */
+.flutter-submit-btn {
+  background: #0F766E;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 2px 6px rgba(15, 118, 110, 0.3);
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.flutter-submit-btn:hover:not(:disabled) {
+  background: #115E59;
+  transform: translateY(-1px);
+}
+
+.flutter-submit-btn:disabled {
+  background: #94A3B8;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+
+.btn-spinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* 4. SIMULATION PANEL */
+.simulation-panel {
+  padding: 12px;
+  background: white;
+}
+
+.simulation-panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+}
+
+.sim-header-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sim-header-title i {
+  color: #0F766E;
+  font-size: 16px;
+}
+
+.sim-header-title h4 {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #0F172A;
+}
+
+.sim-header-title p {
+  font-size: 10.5px;
+  color: #64748B;
+}
+
+.toggle-icon {
+  color: #94A3B8;
+  font-size: 12px;
+  transition: transform 0.2s ease;
+}
+
+.simulation-body {
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid #F1F5F9;
+}
+
+.sim-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: #334155;
+  margin-bottom: 8px;
+}
+
+.sim-btn-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.sim-preset-btn {
+  background: white;
+  border: 1px solid #CBD5E1;
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #1E293B;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: all 0.15s ease;
+}
+
+.sim-preset-btn:hover {
+  background: #F8FAFC;
+  border-color: #94A3B8;
+}
+
+.btn-case1:hover { border-color: #10B981; color: #047857; }
+.btn-case2:hover { border-color: #EF4444; color: #B91C1C; }
+.btn-case3:hover { border-color: #F97316; color: #C2410C; }
+
+/* RIGHT INSPECTOR COLUMN */
+.inspector-column {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.inspector-card {
+  background: var(--surface-dark);
+  border: 1px solid var(--border-dark);
+  border-radius: 14px;
+  padding: 16px 20px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.inspector-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.inspector-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #FFFFFF;
+}
+
+.architecture-sub {
+  font-size: 11px;
+  color: var(--color-cyan);
+  font-weight: 600;
+}
+
+.telemetry-live-badge {
+  font-size: 10px;
+  font-weight: 700;
+  background: rgba(16, 185, 129, 0.2);
+  border: 1px solid rgba(16, 185, 129, 0.5);
+  color: #34D399;
+  padding: 2px 8px;
+  border-radius: 10px;
+}
+
+/* PIPELINE VISUALIZATION TRACK */
+.pipeline-flow-container {
+  overflow-x: auto;
+  padding: 8px 0;
+}
+
+.pipeline-track {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 720px;
+}
+
+.pipeline-node {
+  background: var(--card-dark);
+  border: 1px solid var(--border-dark);
+  border-radius: 10px;
+  padding: 10px 8px;
+  text-align: center;
+  flex: 1;
+  transition: all 0.3s ease;
+}
+
+.pipeline-node.node-active {
+  background: rgba(15, 118, 110, 0.3);
+  border-color: #14B8A6;
+  box-shadow: 0 0 12px rgba(20, 184, 166, 0.4);
+}
+
+.pipeline-node.node-pass {
+  background: rgba(16, 185, 129, 0.2);
+  border-color: #10B981;
+}
+
+.pipeline-node.node-fail {
+  background: rgba(239, 68, 68, 0.2);
+  border-color: #EF4444;
+  box-shadow: 0 0 12px rgba(239, 68, 68, 0.4);
+}
+
+.node-icon {
+  font-size: 16px;
+  color: var(--primary-teal-light);
+  margin-bottom: 4px;
+}
+
+.node-title {
+  font-size: 11px;
+  font-weight: 700;
+  color: #FFFFFF;
+}
+
+.node-desc {
+  font-size: 9.5px;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.pipeline-arrow {
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+/* TELEMETRY GRID */
+.telemetry-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.telemetry-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: var(--card-dark);
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border-dark);
+}
+
+.telemetry-label {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--text-muted);
+  width: 140px;
+  flex-shrink: 0;
+}
+
+.telemetry-val {
+  font-family: 'Fira Code', monospace;
+  font-size: 11.5px;
+  color: #38BDF8;
+  word-break: break-all;
+}
+
+/* FRICTION TIMER BAR */
+.friction-status-pill {
+  font-size: 11px;
+  font-weight: 600;
+  background: var(--card-dark);
+  padding: 3px 8px;
+  border-radius: 12px;
+  border: 1px solid var(--border-dark);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.friction-timer-bar-container {
+  width: 100%;
+  height: 8px;
+  background: var(--card-dark);
+  border-radius: 4px;
+  overflow: hidden;
+  margin: 8px 0;
+}
+
+.friction-timer-fill {
+  width: 0%;
+  height: 100%;
+  background: linear-gradient(90deg, #3B82F6, #F59E0B, #EF4444);
+  transition: width 0.1s linear;
+}
+
+.friction-timer-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+
+/* CONSOLE BOXES */
+.console-box {
+  background: #080C14;
+  border: 1px solid #1E293B;
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-family: 'Fira Code', monospace;
+  font-size: 11px;
+  color: #E2E8F0;
+  max-height: 110px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.console-audit {
+  max-height: 130px;
+}
+
+.console-line {
+  line-height: 1.4;
+  word-break: break-word;
+}
+
+.quarantine-counter {
+  font-size: 11px;
+  font-weight: 700;
+  color: #F87171;
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  padding: 2px 8px;
+  border-radius: 12px;
+}
+
+/* COLORS */
+.text-teal { color: #14B8A6; }
+.text-blue { color: #60A5FA; }
+.text-green { color: #10B981; }
+.text-red { color: #EF4444; }
+.text-orange { color: #F97316; }
+.text-gray { color: #64748B; }
+.text-muted { color: #64748B; }
