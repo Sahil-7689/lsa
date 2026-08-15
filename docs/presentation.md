@@ -298,7 +298,8 @@ Hesitation Duration: 5.0s
 ### Visual Layout
 - Embedded technical demonstration video and test summary metrics.
 
-![HPF Technical Demonstration Video](file:///C:/Users/Dell/.gemini/antigravity-ide/brain/cc3ecebe-6dbe-4333-bfe8-2231cc0aed7a/hpf_lsa_demo_video_1786782748622.webp)
+**Embedded Demonstration Video:**
+> 🎥 [Screen Recording - Aug 15, 2026.mp4](file:///d:/flutter/web_demo/public/demo_video.mp4) (Embedded in interactive presentation: `http://localhost:5000/presentation.html#slide-11`)
 
 ### Demonstrated Scenarios
 1. **Case 1 (Valid Submission):** Input `PCC-2026-9901` $\rightarrow$ verified by API $\rightarrow$ Success with dynamic ID `VER-xxxxx`.

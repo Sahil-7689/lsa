@@ -823,11 +823,15 @@
       <p class="slide-subtitle">Live recording validating all 6 core assignment scenarios in the execution environment</p>
       
       <div class="slide-content single-col">
-        <div style="background: #000; border-radius: 12px; overflow: hidden; border: 1px solid var(--border-color); text-align: center; padding: 12px;">
-          <img src="lsa_demo_preview.png" onerror="this.src='https://placehold.co/800x380/0F172A/14B8A6?text=HPF+Technical+Demonstration+Video+Recording'" style="max-width: 100%; max-height: 320px; border-radius: 8px;" alt="Demo Video">
-          <p style="font-size: 11.5px; color: var(--text-muted); margin-top: 8px;">
-            Full recording available in artifact: <code>walkthrough.md</code>
-          </p>
+        <div style="background: #000; border-radius: 14px; overflow: hidden; border: 1px solid var(--border-color); text-align: center; padding: 8px; box-shadow: 0 10px 40px rgba(0,0,0,0.6);">
+          <video controls autoplay loop muted playsinline style="width: 100%; max-height: 380px; border-radius: 10px; background: #000;">
+            <source src="demo_video.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+          <div style="display: flex; justify-content: space-between; align-items: center; padding: 6px 12px; margin-top: 4px; font-size: 11.5px; color: var(--text-muted);">
+            <span><i class="fa-solid fa-circle-check text-green"></i> Validated Scenarios: UI • Valid (200) • Missing Lineage (Quarantined) • 500 Fail-Closed • Friction &gt;5s</span>
+            <span style="font-family: 'Fira Code', monospace; color: var(--accent-blue);">Screen Recording - Aug 15, 2026</span>
+          </div>
         </div>
       </div>
     </section>
