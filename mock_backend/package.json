@@ -1,0 +1,24 @@
+{
+  "name": "habotconnect-mock-backend",
+  "version": "1.0.0",
+  "description": "Local Mock REST API for HabotConnect LSA Verification & Data Lineage Integration (HPF)",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node src/server.js",
+    "test": "node --test"
+  },
+  "keywords": [
+    "habotconnect",
+    "compliance",
+    "mock-api",
+    "data-lineage",
+    "fail-closed"
+  ],
+  "author": "HabotConnect Candidate",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.2"
+  }
+}
